@@ -719,72 +719,241 @@
         }
 
         /* ============================================================
-           SECTION: TEXT MASK VIDEO
+           SECTION: VIDEO SHOWCASE — Optimized UI/UX
            ============================================================ */
-        .mask-section {
+        .video-section {
             min-height: 100vh;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
             padding: 120px 48px;
             position: relative;
-            background: var(--cream);
-            color: var(--obsidian);
+            background: var(--obsidian);
             overflow: hidden;
         }
 
-        .mask-container {
+        .video-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(ellipse at 50% 50%, rgba(255, 77, 77, 0.03) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .video-header {
+            text-align: center;
+            margin-bottom: 64px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .video-label {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: var(--molten);
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+        }
+
+        .video-label::before,
+        .video-label::after {
+            content: '';
+            width: 48px;
+            height: 1px;
+            background: var(--molten);
+        }
+
+        .video-header h2 {
+            font-family: var(--font-display);
+            font-size: clamp(2rem, 5vw, 4rem);
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            margin-bottom: 16px;
+            color: var(--alabaster);
+        }
+
+        .video-header p {
+            font-family: var(--font-body);
+            font-size: 1.125rem;
+            color: var(--stone);
+            max-width: 500px;
+            margin: 0 auto;
+            line-height: 1.7;
+        }
+
+        .video-container {
             position: relative;
             width: 100%;
             max-width: 1200px;
             aspect-ratio: 16/9;
+            border-radius: 16px;
             overflow: hidden;
+            background: var(--charcoal);
+            box-shadow: 
+                0 40px 80px rgba(0, 0, 0, 0.5),
+                0 0 0 1px rgba(244, 241, 234, 0.06);
+            z-index: 2;
         }
 
-        .mask-video {
-            position: absolute;
-            top: 0;
-            left: 0;
+        .video-container video {
             width: 100%;
             height: 100%;
             object-fit: cover;
+            display: block;
         }
 
-        .mask-overlay {
+        .video-overlay {
             position: absolute;
-            top: 0;
+            bottom: 0;
             left: 0;
-            width: 100%;
-            height: 100%;
+            right: 0;
+            padding: 48px 40px 32px;
+            background: linear-gradient(to top, rgba(10, 10, 10, 0.9) 0%, rgba(10, 10, 10, 0.4) 50%, transparent 100%);
+            pointer-events: none;
+            z-index: 3;
+        }
+
+        .video-overlay-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+
+        .video-overlay-left h3 {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            margin-bottom: 8px;
+            color: var(--alabaster);
+        }
+
+        .video-overlay-left p {
+            font-family: var(--font-body);
+            font-size: 0.9375rem;
+            color: var(--stone);
+            line-height: 1.5;
+            max-width: 400px;
+        }
+
+        .video-overlay-right {
             display: flex;
             align-items: center;
-            justify-content: center;
-            background: var(--cream);
-            mix-blend-mode: screen;
+            gap: 12px;
         }
 
-        .mask-text {
-            font-family: var(--font-display);
-            font-size: clamp(4rem, 12vw, 14rem);
-            font-weight: 700;
-            letter-spacing: -0.04em;
-            line-height: 0.85;
-            text-align: center;
-            color: var(--obsidian);
-            padding: 0 48px;
+        .video-badge {
+            font-family: var(--font-mono);
+            font-size: 0.625rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--molten);
+            padding: 8px 14px;
+            border: 1px solid rgba(255, 77, 77, 0.3);
+            border-radius: 4px;
+            background: rgba(255, 77, 77, 0.05);
         }
 
-        .mask-caption {
+        .video-controls {
             position: absolute;
             bottom: 32px;
             left: 50%;
             transform: translateX(-50%);
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            z-index: 4;
+            background: rgba(26, 26, 26, 0.9);
+            backdrop-filter: blur(20px);
+            padding: 12px 24px;
+            border-radius: 50px;
+            border: 1px solid rgba(244, 241, 234, 0.08);
+            opacity: 0;
+            transition: opacity 0.4s var(--ease-smooth), transform 0.4s var(--ease-smooth);
+        }
+
+        .video-container:hover .video-controls {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .video-controls .control-btn {
+            background: none;
+            border: none;
+            color: var(--alabaster);
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 50%;
+            transition: background 0.3s, color 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .video-controls .control-btn:hover {
+            background: rgba(255, 77, 77, 0.15);
+            color: var(--molten);
+        }
+
+        .video-controls .control-btn svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        .video-progress {
+            flex: 1;
+            height: 3px;
+            background: rgba(244, 241, 234, 0.1);
+            border-radius: 2px;
+            position: relative;
+            cursor: pointer;
+            min-width: 120px;
+        }
+
+        .video-progress-fill {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 0%;
+            background: var(--molten);
+            border-radius: 2px;
+            transition: width 0.1s linear;
+        }
+
+        .video-progress:hover .video-progress-fill {
+            background: var(--gold);
+        }
+
+        .video-time {
+            font-family: var(--font-mono);
+            font-size: 0.625rem;
+            color: var(--stone);
+            letter-spacing: 0.1em;
+            min-width: 80px;
+            text-align: center;
+        }
+
+        .video-caption {
+            margin-top: 32px;
             font-family: var(--font-mono);
             font-size: 0.75rem;
             letter-spacing: 0.2em;
             text-transform: uppercase;
             color: var(--stone);
-            z-index: 10;
+            text-align: center;
+            position: relative;
+            z-index: 2;
         }
 
         /* ============================================================
@@ -1478,6 +1647,11 @@
             .timeline-connector {
                 display: none;
             }
+            .video-overlay-content {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 16px;
+            }
         }
 
         @media (max-width: 768px) {
@@ -1502,11 +1676,22 @@
             .playground-section,
             .timeline-section,
             .magnetic-section,
-            .splitflap-section {
+            .splitflap-section,
+            .video-section {
                 padding: 80px 24px;
             }
             .horizontal-item {
                 width: 320px;
+            }
+            .video-container {
+                border-radius: 8px;
+            }
+            .video-controls {
+                padding: 10px 16px;
+                gap: 10px;
+            }
+            .video-progress {
+                min-width: 80px;
             }
             body {
                 cursor: auto;
@@ -1571,6 +1756,7 @@
         .stagger-children > *:nth-child(5) { transition-delay: 0.5s; }
         .stagger-children > *:nth-child(6) { transition-delay: 0.6s; }
     </style>
+<base target="_blank">
 <base target="_blank">
 </head>
 <body>
@@ -1762,17 +1948,53 @@
         </div>
     </section>
 
-    <!-- Text Mask Video Section -->
-    <section class="mask-section" id="mask">
-        <div class="mask-container">
-            <video class="mask-video" autoplay muted loop playsinline>
+    <!-- Video Showcase Section — Optimized -->
+    <section class="video-section" id="video">
+        <div class="video-header reveal">
+            <div class="video-label">04 — Motion Showcase</div>
+            <h2>Kinetic Typography in Motion</h2>
+            <p>Experience the raw power of animated letterforms. Typography that moves, impacts, and transforms.</p>
+        </div>
+        <div class="video-container reveal-scale">
+            <video id="showcaseVideo" autoplay muted loop playsinline>
                 <source src="Massive_kinetic_typography_animation_of_the_word__MAX_,_letters_slamming_into_screen_with_aggressive_seed3106701774.mp4" type="video/mp4">
             </video>
-            <div class="mask-overlay">
-                <div class="mask-text">TYPE<br>IS<br>ART</div>
+            <div class="video-overlay">
+                <div class="video-overlay-content">
+                    <div class="video-overlay-left">
+                        <h3>MAX — Kinetic Impact</h3>
+                        <p>Letters slam into the screen with aggressive force. A study in typographic power and motion dynamics.</p>
+                    </div>
+                    <div class="video-overlay-right">
+                        <span class="video-badge">4K Loop</span>
+                        <span class="video-badge">60fps</span>
+                    </div>
+                </div>
+            </div>
+            <div class="video-controls">
+                <button class="control-btn" id="playPauseBtn" title="Play/Pause">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z"/>
+                    </svg>
+                </button>
+                <div class="video-progress" id="videoProgress">
+                    <div class="video-progress-fill" id="videoProgressFill"></div>
+                </div>
+                <span class="video-time" id="videoTime">00:00 / 00:00</span>
+                <button class="control-btn" id="muteBtn" title="Mute/Unmute">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M11 5L6 9H2v6h4l5 4V5z"/>
+                        <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/>
+                    </svg>
+                </button>
+                <button class="control-btn" id="fullscreenBtn" title="Fullscreen">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/>
+                    </svg>
+                </button>
             </div>
         </div>
-        <div class="mask-caption">Text as Mask — Video Typography</div>
+        <div class="video-caption">Scroll to explore more — Hover video for controls</div>
     </section>
 
     <!-- Variable Font Playground -->
@@ -1965,7 +2187,7 @@
                     <li><a href="#timeline">Timeline</a></li>
                     <li><a href="#magnetic">Magnetic</a></li>
                     <li><a href="#splitflap">Split Flap</a></li>
-                    <li><a href="#mask">Mask</a></li>
+                    <li><a href="#video">Video</a></li>
                 </ul>
             </div>
             <div class="footer-col">
@@ -2018,7 +2240,7 @@
         animateTrail();
 
         // Cursor hover states
-        const interactiveElements = document.querySelectorAll('a, button, .specimen-card, .horizontal-item, .preset-btn');
+        const interactiveElements = document.querySelectorAll('a, button, .specimen-card, .horizontal-item, .preset-btn, .control-btn');
         interactiveElements.forEach(el => {
             el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
             el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
@@ -2251,6 +2473,73 @@
             const scrollY = window.scrollY;
             heroBg.style.transform = `translateY(${scrollY * 0.3}px) rotate(${scrollY * 0.02}deg)`;
         });
+
+        // ============================================================
+        // VIDEO SHOWCASE — Custom Controls
+        // ============================================================
+        const video = document.getElementById('showcaseVideo');
+        const playPauseBtn = document.getElementById('playPauseBtn');
+        const muteBtn = document.getElementById('muteBtn');
+        const fullscreenBtn = document.getElementById('fullscreenBtn');
+        const videoProgress = document.getElementById('videoProgress');
+        const videoProgressFill = document.getElementById('videoProgressFill');
+        const videoTime = document.getElementById('videoTime');
+
+        // Play/Pause
+        playPauseBtn.addEventListener('click', () => {
+            if (video.paused) {
+                video.play();
+                playPauseBtn.innerHTML = `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z"/></svg>`;
+            } else {
+                video.pause();
+                playPauseBtn.innerHTML = `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>`;
+            }
+        });
+
+        // Mute/Unmute
+        muteBtn.addEventListener('click', () => {
+            video.muted = !video.muted;
+            if (video.muted) {
+                muteBtn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>`;
+            } else {
+                muteBtn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>`;
+            }
+        });
+
+        // Fullscreen
+        fullscreenBtn.addEventListener('click', () => {
+            if (video.requestFullscreen) {
+                video.requestFullscreen();
+            } else if (video.webkitRequestFullscreen) {
+                video.webkitRequestFullscreen();
+            } else if (video.msRequestFullscreen) {
+                video.msRequestFullscreen();
+            }
+        });
+
+        // Progress update
+        video.addEventListener('timeupdate', () => {
+            const progress = (video.currentTime / video.duration) * 100;
+            videoProgressFill.style.width = progress + '%';
+
+            const current = formatTime(video.currentTime);
+            const duration = formatTime(video.duration || 0);
+            videoTime.textContent = `${current} / ${duration}`;
+        });
+
+        // Seek
+        videoProgress.addEventListener('click', (e) => {
+            const rect = videoProgress.getBoundingClientRect();
+            const pos = (e.clientX - rect.left) / rect.width;
+            video.currentTime = pos * video.duration;
+        });
+
+        function formatTime(seconds) {
+            if (isNaN(seconds)) return '00:00';
+            const mins = Math.floor(seconds / 60);
+            const secs = Math.floor(seconds % 60);
+            return `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+        }
 
         // Initialize
         updatePlayground();
